@@ -1,0 +1,7 @@
+name = Field Group Extra
+description = "Provides extra field group types."
+package = Fields
+backdrop = 1.x
+type = module
+dependencies[] = field_group
+# minimum version of field_group?
