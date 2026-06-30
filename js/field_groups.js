@@ -79,7 +79,7 @@ Backdrop.FieldGroup.Effects.processHtabs = {
         }
         if ($('.error', $(this)).length) {
           $(this).data('horizontalTab').link.parent().addClass('error');
-          Backdrop.FieldGroup.setGroupWithfocus($(this));
+          Backdrop.FieldGroup.setGroupWithFocus($(this));
           $(this).data('horizontalTab').focus();
         }
       });

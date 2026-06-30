@@ -252,7 +252,7 @@ Backdrop.FieldGroup.Effects.processMultipage = {
             $firstErrorItem = $(this).data('multipageControl');
           }
 
-          Backdrop.FieldGroup.setGroupWithfocus($(this));
+          Backdrop.FieldGroup.setGroupWithFocus($(this));
           $(this).data('multipageControl').focus();
         }
       });
