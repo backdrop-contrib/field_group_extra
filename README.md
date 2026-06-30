@@ -1,11 +1,14 @@
 Field Group Extra
 =================
 
-Provides an extra set of field groups to Field Group module:
+Provides an extra set of field groups to the existing Field Group module types:
 
 * Horizontal tabs
 * Accordions
 * Multipage steps (only display)
+
+These types have an HTML wrapper to nest its fieldgroup children. For example,
+place accordion items into the accordion group.
 
 License
 -------
@@ -21,7 +24,7 @@ Credit
 ------
 
 Separated from Drupal 7 version of Field Group by Herb v/d Dool. Drupal 7
-maintainers:
+maintainers of original Field Group module:
 
 * [stalski](http://drupal.org/user/322618)
 * [swentel](http://drupal.org/user/107403)
