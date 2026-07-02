@@ -1,5 +1,5 @@
 [GroupExtraDisplayTestCase]
 name = Field Group Extra Display tests
-description = Test the field group display for horizontal tabs, multipage and accordions.
+description = Test the field group display for html-element, horizontal tabs, multipage and accordions.
 group = Field Group Extra
 file = field_group_extra.display.test

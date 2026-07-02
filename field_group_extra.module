@@ -90,6 +90,20 @@ function field_group_extra_library_info() {
 function field_group_extra_field_group_formatter_info() {
   return array(
     'form' => array(
+      'html-element' => array(
+        'label' => t('HTML element'),
+        'description' => t('This fieldgroup renders the inner content in an HTML element with classes and attributes.'),
+        'instance_settings' => array(
+          'wrapper' => '',
+          'wrapper_other' => 'div',
+          'show_label' => 0,
+          'label_element' => 'div',
+          'classes' => '',
+          'attributes' => '',
+          'required_fields' => 1,
+          'id' => '',
+        ),
+      ),
       'htabs' => array(
         'label' => t('Horizontal tabs group'),
         'description' => t('This fieldgroup renders child groups in its own horizontal tabs wrapper.'),
@@ -128,6 +142,20 @@ function field_group_extra_field_group_formatter_info() {
       ),
     ),
     'display' => array(
+      'html-element' => array(
+        'label' => t('HTML element'),
+        'description' => t('This fieldgroup renders the inner content in an HTML element with classes and attributes.'),
+        'instance_settings' => array(
+          'wrapper' => '',
+          'wrapper_other' => 'div',
+          'show_label' => 0,
+          'label_element' => 'div',
+          'classes' => '',
+          'attributes' => '',
+          'required_fields' => 1,
+          'id' => '',
+        ),
+      ),
       'htabs' => array(
         'label' => t('Horizontal tabs group'),
         'description' => t('This fieldgroup renders child groups in its own horizontal tabs wrapper.'),
@@ -166,6 +194,63 @@ function field_group_extra_field_group_format_settings_alter(&$form, &$group) {
 
   // Add optional instance_settings.
   switch ($group->format_type) {
+    case 'html-element':
+      $form['instance_settings']['wrapper'] = array(
+        '#title' => t('Wrapper tag'),
+        '#type' => 'select',
+        '#options' => array(
+          'section' => t('Section'),
+          'article' => t('Article'),
+          'header' => t('Header'),
+          'footer' => t('Footer'),
+          'aside' => t('Aside'),
+          'div' => t('Div'),
+          'other' => t('Other'),
+        ),
+        '#default_value' => isset($group->format_settings['instance_settings']['wrapper']) ? $group->format_settings['instance_settings']['wrapper'] : 'section',
+      );
+
+      $form['instance_settings']['wrapper_other'] = array(
+        '#title' => t('Other'),
+        '#type' => 'textfield',
+        '#default_value' => isset($group->format_settings['instance_settings']['wrapper_other']) ? $group->format_settings['instance_settings']['wrapper_other'] : $formatter['instance_settings']['wrapper_other'],
+        '#description' => t('For example: p, span'),
+        '#weight' => 1,
+        '#states' => array(
+          'visible' => array(
+            'select[name="fields[' . $group->group_name . '][format_settings][settings][instance_settings][wrapper]"]' => array('value' => 'other'),
+          ),
+        ),
+      );
+
+      $form['instance_settings']['show_label'] = array(
+        '#title' => t('Show label'),
+        '#type' => 'select',
+        '#options' => array(0 => t('No'), 1 => t('Yes')),
+        '#default_value' => isset($group->format_settings['instance_settings']['show_label']) ? $group->format_settings['instance_settings']['show_label'] : $formatter['instance_settings']['show_label'],
+        '#weight' => 2,
+      );
+
+      $form['instance_settings']['label_element'] = array(
+        '#title' => t('Label element'),
+        '#type' => 'textfield',
+        '#default_value' => isset($group->format_settings['instance_settings']['label_element']) ? $group->format_settings['instance_settings']['label_element'] : $formatter['instance_settings']['label_element'],
+        '#weight' => 3,
+        '#states' => array(
+          'visible' => array(
+            'select[name="fields[' . $group->group_name . '][format_settings][settings][instance_settings][show_label]"]' => array('value' => 1),
+          ),
+        ),
+      );
+
+      $form['instance_settings']['attributes'] = array(
+        '#title' => t('Attributes'),
+        '#type' => 'textfield',
+        '#default_value' => isset($group->format_settings['instance_settings']['attributes']) ? $group->format_settings['instance_settings']['attributes'] : $formatter['instance_settings']['attributes'],
+        '#description' => t('E.g. name="anchor"'),
+        '#weight' => 4,
+      );
+      break;
     case 'multipage-group':
       $form['instance_settings']['page_header'] = array(
         '#title' => t('Format page title'),

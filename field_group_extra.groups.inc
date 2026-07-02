@@ -121,6 +121,66 @@ function field_group_pre_render_htab(&$element, $group, &$form) {
 
 /**
  * Implements field_group_pre_render_<format-type>.
+ * Format type: HTML element.
+ *
+ * @param array $element
+ *   The field group form element.
+ * @param object $group
+ *   The Field group object prepared for pre_render.
+ * @param array $form
+ *   The root element or form.
+ */
+function field_group_pre_render_html_element(array &$element, $group, array &$form) {
+  $html_element = isset($group->format_settings['instance_settings']['wrapper_other']) ? $group->format_settings['instance_settings']['wrapper_other'] : 'div';
+  $wrapper = $group->format_settings['instance_settings']['wrapper'];
+  if (!empty($wrapper) && $wrapper != 'other') {
+    $html_element = $wrapper;
+  }
+  $show_label = isset($group->format_settings['instance_settings']['show_label']) ? $group->format_settings['instance_settings']['show_label'] : 0;
+  $label_element = isset($group->format_settings['instance_settings']['label_element']) ? $group->format_settings['instance_settings']['label_element'] : 'div';
+  $configured_attributes = isset($group->format_settings['instance_settings']['attributes']) ? ' ' . $group->format_settings['instance_settings']['attributes'] : '';
+  $group->classes = trim($group->classes);
+
+  // This regex split the attributes string so that we can pass that
+  // later to backdrop_attributes().
+  preg_match_all('/([^\s=]+)="([^"]+)"/', $configured_attributes, $matches);
+
+  $element_attributes = array();
+  // Put the attribute and the value together.
+  foreach ($matches[1] as $key => $attribute) {
+    $element_attributes[$attribute] = $matches[2][$key];
+  }
+
+  // Add the classes to the attributes array.
+  if (!isset($element_attributes['class']) && $group->classes) {
+    $element_attributes['class'] = $group->classes;
+  } elseif (isset($element_attributes['class']) && $group->classes) {
+    $element_attributes['class'] .= ' ' . $group->classes;
+  }
+
+  if (isset($element['#id'])) {
+    $element_attributes['id'] = $element['#id'];
+  }
+
+  // Sanitize the attributes.
+  if (function_exists('filter_xss_attributes')) {
+    // Function introduced in 1.30.x.
+    $attributes = backdrop_attributes(filter_xss_attributes($element_attributes));
+  } else {
+    // Assume using core < 1.30.x.
+    $element_attributes = _filter_xss_attributes(backdrop_attributes($element_attributes));
+    $attributes = $element_attributes ? ' ' . implode(' ', $element_attributes) : '';
+  }
+
+  $element['#prefix'] = '<' . $html_element . $attributes . '>';
+  if ($show_label) {
+    $element['#prefix'] .= '<' . $label_element . '><span>' . check_plain(t($group->label)) . '</span></' . $label_element . '>';
+  }
+  $element['#suffix'] = '</' . $html_element . '>';
+}
+
+/**
+ * Implements field_group_pre_render_<format-type>.
  * Format type: Multipage group.
  *
  * @param array $element
