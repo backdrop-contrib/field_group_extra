@@ -55,6 +55,50 @@ function field_group_pre_render_accordion_item(&$element, $group, &$form) {
 
 /**
  * Implements field_group_pre_render_<format-type>.
+ * Format type: Div.
+ *
+ * @param array $element
+ *   The field group form element.
+ * @param object $group
+ *   The Field group object prepared for pre_render.
+ * @param array $form
+ *   The root element or form.
+ */
+function field_group_pre_render_div(array &$element, $group, array &$form) {
+
+  $show_label = isset($group->format_settings['instance_settings']['show_label']) ? $group->format_settings['instance_settings']['show_label'] : 0;
+  $label_element = isset($group->format_settings['instance_settings']['label_element']) ? $group->format_settings['instance_settings']['label_element'] : 'h2';
+  $effect = isset($group->format_settings['instance_settings']['effect']) ? $group->format_settings['instance_settings']['effect'] : 'none';
+
+  $element['#type'] = 'markup';
+  $id = isset($element['#id']) ? ' id="' . $element['#id'] . '"' : '';
+
+  if ($group->format_settings['formatter'] != 'open') {
+
+    $element['#prefix'] = '<div' . $id . ' class="' . $group->classes . '">
+      <' . $label_element . '><span class="field-group-format-toggler">' . check_plain(t($group->label)) . '</span></' . $label_element . '>
+      <div class="field-group-format-wrapper" style="display: ' . (!empty($group->collapsed) ? 'none' : 'block') . ';">';
+    $element['#suffix'] = '</div></div>';
+  } else {
+    $class_attribute = !empty($group->classes) ? ' class="' . $group->classes . '"' : '';
+
+    $element['#prefix'] = '<div' . $id . $class_attribute . '>';
+    if ($show_label) {
+      $element['#prefix'] .= '<' . $label_element . ' class="field-group-label"><span>' . check_plain(t($group->label)) . '</span></' . $label_element . '>';
+    }
+    $element['#suffix'] = '</div>';
+  }
+  if (!empty($group->description)) {
+    $element['#prefix'] .= '<div class="description">' . $group->description . '</div>';
+  }
+
+  if ($effect == 'blind') {
+    $element['#attached']['library'][] = array('system', 'effects.blind');
+  }
+}
+
+/**
+ * Implements field_group_pre_render_<format-type>.
  * Format type: Horizontal tabs group.
  *
  * @param array $element
