@@ -3,7 +3,7 @@
 /**
  * @file
  * Field Group extras
- * Horizontal tabs, multipage, accordions.
+ * Horizontal tabs, div, multipage, accordions.
  */
 
 require_once dirname(__FILE__) . '/field_group_extra.groups.inc';

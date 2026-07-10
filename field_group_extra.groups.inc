@@ -25,7 +25,7 @@ function field_group_extra_field_group_pre_render(array &$element, $group, array
       );
 
       break;
-    case 'accordion_item':
+    case 'accordion-item':
       $element += array(
         '#type' => 'markup',
         '#prefix' => '<h3 class="field-group-format-toggler ' . $group->format_type . ($group->collapsed ? '' : ' field-group-accordion-active') . '"><a href="#">' . check_plain(t($group->label)) . '</a></h3>
@@ -104,7 +104,7 @@ function field_group_extra_field_group_pre_render(array &$element, $group, array
         '#description' => $group->description,
       );
       break;
-    case 'multipage_group':
+    case 'multipage-group':
       $multipage_element = array(
         '#type' => 'multipage',
         '#theme_wrappers' => array('multipage'),
