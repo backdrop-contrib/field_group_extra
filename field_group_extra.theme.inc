@@ -59,7 +59,7 @@ function theme_multipage($variables) {
 /**
  * Returns HTML for multipage pane.
  *
- * @param $variables
+ * @param array $variables
  *   An associative array containing:
  *   - element: An associative array containing the properties and children of the
  *     fieldset. Properties used: #children.

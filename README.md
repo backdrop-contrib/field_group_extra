@@ -6,9 +6,11 @@ Provides an extra set of field group types to Field Group module:
 * Horizontal tabs
 * Accordions
 * Multipage steps (only display)
+* Collapsible divs
 
-These types have an HTML wrapper to nest its fieldgroup children. For example,
-place accordion items into the accordion group.
+Some of these types have an HTML wrapper to nest its fieldgroup children. For
+example, place accordion items into the accordion group, or multipage items into
+the multipage group.
 
 Do not install if using Field Group version less than 1.x-1.5.x, which already
 includes these field group types.

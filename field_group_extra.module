@@ -35,12 +35,12 @@ function field_group_extra_element_info() {
   $types['horizontal_tabs'] = array(
     '#theme_wrappers' => array('horizontal_tabs'),
     '#default_tab' => '',
-    '#process' => array('form_process_horizontal_tabs'),
+    '#process' => array('field_group_extra_form_process_horizontal_tabs'),
   );
   $types['multipage'] = array(
     '#theme_wrappers' => array('multipage'),
     '#default_tab' => '',
-    '#process' => array('form_process_multipage'),
+    '#process' => array('field_group_extra_form_process_multipage'),
   );
   $types['multipage_pane'] = array(
     '#value' => NULL,
